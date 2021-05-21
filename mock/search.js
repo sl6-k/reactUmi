@@ -6,7 +6,10 @@ export default {
         console.log(req.query.value);
         setTimeout(() => {
             res.json({
-                lists: Array(10).fill(req.query.value)
+                status: 200,
+                data: Array(10).fill(req.query.value)
+                // status: 500,
+                // errMsg: 'test err'
             })
         }, 1000);
     }
