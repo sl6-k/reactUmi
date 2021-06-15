@@ -9,7 +9,7 @@ export default function (props) {
 
   return (
 	<div>
-		user
+		user1
 	</div>
   )
 }
