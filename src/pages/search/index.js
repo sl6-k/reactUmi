@@ -1,16 +1,15 @@
 import React, { useState, useEffect  } from 'react'
 import { SearchBar, ActivityIndicator } from 'antd-mobile'
-import { useHttpHook, useObserverHook } from '@/hooks'
+import { useHttpHook, useObserverHook, useImgHook } from '@/hooks'
 import { useLocation } from 'umi'
+import { ShowLoading } from '@/components'
+import { CommonEnum } from '@/enums'
 
 import './index.less'
 export default function (props) {
   const { query } = useLocation()
   const [houseName, setHouseName] = useState('')
-  const [page, setPage] = useState({
-    pageSize: 8,
-    pageNum: 1
-  })
+  const [page, setPage] = useState(CommonEnum.PAGE)
   const [houseLists, setHouseLists] = useState([])
   const [showloading, setShowloading] = useState(true)
   const [houseSubmitName, setHouseSubmitName] = useState('')
@@ -45,7 +44,7 @@ export default function (props) {
    * 4.监听loading变化，拼接数据 
    * 
    **/
-  useObserverHook('#loading', (entries)=>{
+  useObserverHook('#' + CommonEnum.LOADING_ID, (entries)=>{
     console.log(entries);
     if(!loading && entries[0].isIntersecting){
       setPage({
@@ -55,13 +54,12 @@ export default function (props) {
     }
   }, null) 
 
+  useImgHook('.item-img', () => {}, null)
+
   const _handleSubmit = (value)=>{
     setHouseSubmitName(value)
     setHouseName(value)
-    setPage({
-      pageSize: 8,
-      pageNum: 1
-    })
+    setPage(CommonEnum.PAGE)
     setHouseLists([])
   }
   const handleChange = (value)=>{
@@ -87,14 +85,14 @@ export default function (props) {
     { !houseLists.length ? <ActivityIndicator toast/> : <div className='result'>
       {houseLists.map(item=>(
         <div className='item' key={item.id}>
-        <img alit='img' src={item.img} />
+        <img alit='img' className="item-img" src={require('../../assets/blank.png')} data-src={item.img} />
         <div className='item-right'>
           <div className='title'>{item.title}</div>
           <div className='price'>{item.price}</div>
         </div>
       </div>
       ))}
-      {showloading ? <div id='loading'>loading</div> : <div>没有数据了</div>}
+      <ShowLoading showloading={showloading} />
     </div>}
     
 	</div>

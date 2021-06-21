@@ -20,6 +20,10 @@ export default defineConfig({
             component: './user/index',
             title: '我的'
         },{
+          path: '/user/edit',
+          component: './user/edit',
+          title: '设置用户 '
+        },{
           path: '/search',
           component: './search/index.js',
           title: '搜索'
@@ -27,6 +31,10 @@ export default defineConfig({
           path: '/observer',
           component: './observer',
           title: 'observer'
+        },{
+          path: '/house',
+          component: './house',
+          title: '房屋详情'
         }
     ]
   }, ],
